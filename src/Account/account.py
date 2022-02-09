@@ -1,52 +1,51 @@
-class Conta:
+class Account:
 
-    def __init__(self, numero, titular, saldo, limite):
-        print("Construindo objeto ... {}".format(self))
-        self.__numero = numero
-        self.__titular = titular
-        self.__saldo = saldo
-        self.__limite = limite
+    def __init__(self, number, holder, balance, limit):
+        self.__number = number
+        self.__holder = holder
+        self.__balance = balance
+        self.__limit = limit
 
     @staticmethod
-    def codigo_banco():
+    def bank_code():
         return "001"
 
     @property
-    def saldo(self):
-        return self.__saldo
+    def balance(self):
+        return self.__balance
 
     @property
-    def titular(self):
-        return self.__titular
+    def holder(self):
+        return self.__holder
 
     @property
-    def limite(self):
-        return self.__limite
+    def limit(self):
+        return self.__limit
 
-    @limite.setter
-    def limite(self, novo_limite):
-        self.__limite = novo_limite
-        print("Novo limite definido: {}".format(self.__limite))
+    @limit.setter
+    def limit(self, new_limit):
+        self.__limit = new_limit
+        print("New limit set: {}".format(self.__limit))
 
-    def extrato(self):
-        print("Saldo {} do titular {}".format(self.__saldo, self.__titular))
+    def extract(self):
+        print("Balance {} / Holder {}".format(self.__balance, self.__holder))
 
-    def depositar(self, valor):
-        self.__saldo += valor
-        print("Valor depositado: {}".format(valor))
-        print("Valor total: {}".format(self.__saldo))
+    def deposit(self, amount):
+        self.__balance += amount
+        print("Deposited amount: {}".format(amount))
+        print("Amount: {}".format(self.__balance))
 
-    def __checar_sacar(self, valor):
-        valor_disponivel_saque = self.__saldo + self.__limite
-        return valor <= valor_disponivel_saque
+    def __check_withdraw(self, amount):
+        amount_avaiable_withdraw = self.__balance + self.__limit
+        return amount <= amount_avaiable_withdraw
 
-    def sacar(self, valor):
-        if self.__checar_sacar(valor):
-            self.__saldo -= valor
+    def withdraw(self, amount):
+        if self.__check_withdraw(amount):
+            self.__balance -= amount
         else:
-            print("O valor {} passou o limite".format(valor))
+            print("The amount {} is above the limit".format(amount))
 
-    def transferir(self, valor, destino):
-        self.sacar(valor)
-        destino.depositar(valor)
-        print("Valor transferido: {}".format(valor))
+    def transfer(self, amount, destine):
+        self.withdraw(amount)
+        destine.depositar(amount)
+        print("Amount transfered: {}".format(amount))

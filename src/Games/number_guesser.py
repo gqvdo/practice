@@ -1,54 +1,69 @@
 import random
 
-def jogar():
 
-    imprime_titulo()
-    total_de_tentativas = define_dificuldade()
-    numero_secreto = random.randrange(1,101)
-    pontos = 1000
+def play():
+    print_title()
+    total_attempts = set_difficulty()
+    secret_number = random.randrange(1, 101)
+    points = 1000
 
-    for rodada in range(1, total_de_tentativas + 1):
-        chute = recebe_chute(rodada, total_de_tentativas)
+    for game_round in range(1, total_attempts + 1):
+        guess_number = guess(game_round, total_attempts)
 
-        if(chute < 1 or chute > 100):
-            print("Você deve digitar um número entre 1 e 100!")
+        if guess_number < 1 or guess_number > 100:
+            print("You must type a number between 1 and 100!")
             continue
 
-        acertou = chute == numero_secreto
-        maior   = chute > numero_secreto
-        menor   = chute < numero_secreto
+        win = guess_number == secret_number
+        higher = guess_number > secret_number
+        lower = guess_number < secret_number
 
-        if(acertou):
-            mensagem_final_acertou(acertou, pontos)
+        if win:
+            print_final_message_win(win, points)
             break
         else:
-            check_maior_menor(maior, menor)
-            pontos_perdidos = abs(numero_secreto - chute)
-            pontos = pontos - pontos_perdidos
-            if rodada == total_de_tentativas:
-                mensagem_final_errou()
-def imprime_titulo():
-    print("\n*********************************")
-    print("Bem vindo ao jogo de Adivinhação!")
-    print("*********************************")
-def define_dificuldade():
-    print("Qual o nível de dificuldade?")
-    print("(1) Fácil (2) Médio (3) Difícil")
-    nivel = int(input("Defina o nível: "))
+            check_higher_lower(higher, lower)
+            lost_points = abs(secret_number - guess_number)
+            points = points - lost_points
+            if game_round == total_attempts:
+                print_final_message_lose()
 
-    if(nivel == 1):
-        total_de_tentativas = 20
-    elif(nivel == 2):
-        total_de_tentativas = 10
+
+def print_title():
+    print("\n*********************************")
+    print("Welcome to the Guessing Game!")
+    print("*********************************")
+
+
+def set_difficulty():
+    print("Which difficulty do you choose?")
+    print("(1) Easy (2) Medium (3) Hard")
+    difficulty = int(input("Set the difficulty: "))
+
+    if difficulty == 1:
+        total_attempts = 20
+    elif difficulty == 2:
+        total_attempts = 10
     else:
-        total_de_tentativas = 5
-    return total_de_tentativas
-def recebe_chute(rodada, total_de_tentativas):
-    print("\nTentativa {} de {}".format(rodada, total_de_tentativas))
-    return int(input("Digite um número entre 1 e 100: "))
-def mensagem_final_acertou(acertou, pontos):
-    if(acertou):
-        print("Parabéns, você acertou e fez {} pontos!".format(pontos))
+        total_attempts = 5
+    return total_attempts
+
+
+def guess(game_round, total_attempts):
+    print("\nTry {} of {}".format(game_round, total_attempts))
+    return int(input("Type a number between 1 and 100: "))
+
+
+def check_higher_lower(higher, lower):
+    if higher:
+        print("You lost! Your guess was HIGHER than the secret number.")
+    elif lower:
+        print("You lost! Your guess was LOWER than the secret number.")
+
+
+def print_final_message_win(win, points):
+    if win:
+        print("Congratulations, you WON and made {} points!".format(points))
         print("       ___________      ")
         print("      '._==_==_=_.'     ")
         print("      .-\\:      /-.    ")
@@ -59,27 +74,26 @@ def mensagem_final_acertou(acertou, pontos):
         print("           ) (          ")
         print("         _.' '._        ")
         print("        '-------'       ")
-def check_maior_menor(maior, menor):
-        if (maior):
-            print("Você errou! O seu chute foi maior do que o número secreto.")
-        elif (menor):
-            print("Você errou! O seu chute foi menor do que o número secreto.")
-def mensagem_final_errou():
-    print("    _______________         ")
-    print("   /               \       ")
-    print("  /                 \      ")
-    print("//                   \/\  ")
-    print("\|   XXXX     XXXX   | /   ")
-    print(" |   XXXX     XXXX   |/     ")
-    print(" |   XXX       XXX   |      ")
-    print(" |                   |      ")
-    print(" \__      XXX      __/     ")
-    print("   |\     XXX     /|       ")
-    print("   | |           | |        ")
-    print("   | I I I I I I I |        ")
-    print("   |  I I I I I I  |        ")
-    print("   \_             _/       ")
-    print("     \_         _/         ")
-    print("       \_______/           ")
-if(__name__ == "__main__"):
-    jogar()
+
+
+def print_final_message_lose():
+    print("     _______________   ")
+    print("    /               \ ")
+    print("   /                 \ ")
+    print("/\/                   \/\ ")
+    print("\ |  XXX         XXX  | /")
+    print(" \| XXXXX       XXXXX |/ ")
+    print("  |  XXX         XXX  |  ")
+    print("  |                   |  ")
+    print("  \__      XXX      __/  ")
+    print("    |\     XXX     /|    ")
+    print("    | |           | |    ")
+    print("    | I I I I I I I |    ")
+    print("    |  I I I I I I  |    ")
+    print("    \_             _/    ")
+    print("      \_         _/      ")
+    print("        \_______/        ")
+
+
+if __name__ == "__main__":
+    play()

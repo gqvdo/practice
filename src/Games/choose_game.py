@@ -1,20 +1,27 @@
-import forca
-import adivinhacao
+import hangman
+import number_guesser
 
-def jogar():
-    mensagem_inicial()
-    jogo = escolhe_jogo()
 
-    if(jogo == 1):
-        forca.jogar()
-    elif(jogo == 2):
-        adivinhacao.jogar()
-def mensagem_inicial():
+def play():
+    print_title()
+    game = choose_game()
+
+    if game == 1:
+        hangman.play()
+    elif game == 2:
+        number_guesser.play()
+
+
+def print_title():
     print("*****************")
-    print("Escolha seu Jogo!")
+    print("Choose your game!")
     print("*****************")
-def escolhe_jogo():
-    print("(1) Forca (2) Adivinhação")
-    return int(input("Qual o jogo?"))
-if(__name__ == "__main__"):
-    jogar()
+
+
+def choose_game():
+    print("(1) Hangman (2) Guessing Game")
+    return int(input("Which game you want to play?"))
+
+
+if __name__ == "__main__":
+    play()

@@ -1,39 +1,75 @@
-class Programa:
-    def __init__(self, nome, ano):
-        self.__nome = nome.title()
-        self.ano = ano
+class Show:
+    def __init__(self, name, year):
+        self.__name = name.title()
+        self.year = year
         self.__likes = 0
 
     @property
-    def nome(self):
-        return self.__nome
+    def name(self):
+        return self.__name
 
     @property
     def likes(self):
         return self.__likes
 
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name.title()
 
-    def dar_like(self):
-        self.__likes += 1
+    @likes.setter
+    def likes(self, value):
+        self.__likes = value
 
-
-class Filme(Programa):
-    def __init__(self, nome, ano, duracao):
-        super().__init__(nome, ano)
-        self.duracao = duracao
+    def __str__(self):
+        return f"{self.name} - {self.year} - {self.likes}"
 
 
-class Serie(Programa):
-    def __init__(self, nome, ano, temporadas):
-        super().__init__(nome, ano)
-        self.temporadas = temporadas
+class Movie(Show):
+    def __init__(self, name, year, duration):
+        super().__init__(name, year)
+        self.duration = duration
+
+    def __str__(self):
+        return f"{self.name} - {self.year} - {self.duration} min - {self.likes} likes"
 
 
-vingadores = Filme("vingadores - guerra infinita", 2018, 160)
-print(f"{vingadores.nome} - {vingadores.ano} - {vingadores.duracao} - {vingadores.likes}")
+class Series(Show):
+    def __init__(self, name, year, seasons):
+        super().__init__(name, year)
+        self.seasons = seasons
 
-atlanta = Serie("atlanta", 2018, 2)
-print(f"{atlanta.nome} - {atlanta.ano} - {atlanta.temporadas} - {atlanta.likes}")
+    def __str__(self):
+        return f"{self.name} - {self.year} - {self.seasons} seasons - {self.likes} likes"
+
+
+class Playlist:
+    def __init__(self, name, shows):
+        self.name = name
+        self.__shows = shows
+
+    def __getitem__(self, item):
+        return self.__shows[item]
+
+    def __len__(self):
+        return len(self.__shows)
+
+
+# Testing
+# avengers = Filme("avengers", 2018, 160)
+# atlanta = Serie("atlanta", 2018, 2)
+# tring = Filme("The ring", 2002, 100)
+# daredevil = Serie("daredevil", 2016, 2)
+#
+# avengers.dar_like()
+# atlanta.dar_like()
+# tring.dar_like()
+# daredevil.dar_like()
+# daredevil.dar_like()
+#
+# movies_series = [avengers, atlanta, daredevil, tring]
+# weekend_playlist = Playlist("weekend", movies_series)
+#
+# print(f"Playlist size: {len(weekend_playlist)}")
+#
+# for programa in weekendplaylist:
+#     print(shows)
